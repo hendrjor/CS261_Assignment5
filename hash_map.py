@@ -135,7 +135,7 @@ class HashMap:
 
 
 # BASIC TESTING
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
     # print("\nPDF - empty_buckets example 1")
     # print("-----------------------------")
@@ -180,16 +180,16 @@ if __name__ == "__main__":
     #     if i % 10 == 0:
     #         print(m.table_load(), m.size, m.capacity)
 
-    print("\nPDF - clear example 1")
-    print("---------------------")
-    m = HashMap(100, hash_function_1)
-    print(m.size, m.capacity)
-    m.put('key1', 10)
-    m.put('key2', 20)
-    m.put('key1', 30)
-    print(m.size, m.capacity)
-    m.clear()
-    print(m.size, m.capacity)
+    # print("\nPDF - clear example 1")
+    # print("---------------------")
+    # m = HashMap(100, hash_function_1)
+    # print(m.size, m.capacity)
+    # m.put('key1', 10)
+    # m.put('key2', 20)
+    # m.put('key1', 30)
+    # print(m.size, m.capacity)
+    # m.clear()
+    # print(m.size, m.capacity)
 
 
     # print("\nPDF - clear example 2")
