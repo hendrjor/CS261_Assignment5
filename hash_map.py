@@ -94,8 +94,8 @@ class HashMap:
         index = hash % self.capacity
 
         sll = self.buckets.get_at_index(index)  # acquires the index the key should be in
-        sll.remove(key)
-        self.size -= 1
+        if sll.remove(key) is True:
+            self.size -= 1
 
 
     def contains_key(self, key: str) -> bool:
