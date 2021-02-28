@@ -104,11 +104,14 @@ class HashMap:
         index = hash % self.capacity  # determines the index assigned to that value
 
         sll = self.buckets.get_at_index(index)  # acquires the index the key should be in
-        sll_key = sll.contains(key)
-        if sll_key is None:  # determines if the key is in the linked list
+        # sll_key = sll.contains(key)
+        if sll.contains(key) is None:
             return False
-        elif sll_key.key == key:
-            return True
+        return True
+        # if sll_key is None:  # determines if the key is in the linked list
+        #     return False
+        # elif sll_key.key == key:
+        #     return True
 
     def empty_buckets(self) -> int:
         """Returns the number of empty buckets in the hash table"""
