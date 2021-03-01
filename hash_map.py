@@ -125,20 +125,27 @@ class HashMap:
         if new_capacity <= 1:
             return
 
-        for index in range(self.capacity, new_capacity):
-            self.buckets.append(LinkedList())
-        self.capacity = new_capacity
-        for index in range(new_capacity):
+        new_buckets = DynamicArray()
+
+        for index in range(0, new_capacity):
+            new_buckets.append(LinkedList())
+        for index in range(self.capacity):
             sll = self.buckets.get_at_index(index)
             for node in sll:
                 key = node.key
                 value = node.value
-                self.put(key, value)
+
+                hash = self.hash_function(key)  # computes the hash value based on the key
+                index = hash % new_capacity  # determines the index assigned to that value
+
+                new_sll = new_buckets.get_at_index(index)
+                new_sll.insert(key, value)  # adds a key to the list
+
+        self.buckets = new_buckets
+        self.capacity = new_capacity
 
     def get_keys(self) -> DynamicArray:
-        """
-        TODO: Write this implementation
-        """
+        """Returns a dynamic array of all keys stored in the hash map"""
         return DynamicArray()
 
 
