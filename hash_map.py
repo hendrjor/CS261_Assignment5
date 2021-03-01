@@ -122,11 +122,10 @@ class HashMap:
 
     def resize_table(self, new_capacity: int) -> None:
         """Changes the capacity of the hash table"""
-        if new_capacity <= 1:
+        if new_capacity < 1:
             return
 
         new_buckets = DynamicArray()
-
         for index in range(0, new_capacity):
             new_buckets.append(LinkedList())
         for index in range(self.capacity):
