@@ -140,7 +140,6 @@ class HashMap:
 
                 new_sll = new_buckets.get_at_index(index)
                 new_sll.insert(key, value)  # adds a key to the list
-
         self.buckets = new_buckets
         self.capacity = new_capacity
 
