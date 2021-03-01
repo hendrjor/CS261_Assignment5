@@ -87,7 +87,6 @@ class HashMap:
             sll.insert(key, value)  # adds a key to the list
             self.size += 1
 
-
     def remove(self, key: str) -> None:
         """Removes a key and its associated value"""
         hash = self.hash_function(key)  # computes the hash value based on the key
@@ -97,21 +96,15 @@ class HashMap:
         if sll.remove(key) is True:
             self.size -= 1
 
-
     def contains_key(self, key: str) -> bool:
         """Determines if the given key is in the hash map"""
         hash = self.hash_function(key)  # computes the hash value based on the key
         index = hash % self.capacity  # determines the index assigned to that value
 
         sll = self.buckets.get_at_index(index)  # acquires the index the key should be in
-        # sll_key = sll.contains(key)
         if sll.contains(key) is None:
             return False
         return True
-        # if sll_key is None:  # determines if the key is in the linked list
-        #     return False
-        # elif sll_key.key == key:
-        #     return True
 
     def empty_buckets(self) -> int:
         """Returns the number of empty buckets in the hash table"""
@@ -131,18 +124,16 @@ class HashMap:
         """Changes the capacity of the hash table"""
         if new_capacity <= 1:
             return
-        elif new_capacity >= self.capacity:
-            for index in range(self.capacity, new_capacity):
-                self.buckets.append(LinkedList())
-            self.capacity = new_capacity
-        # else:
-        #     for index in range(new_capacity, self.capacity):
-        #         sll = self.buckets.get_at_index(index)  # acquires the index the key should be in
-        #         print(index)
-                # hash = self.hash_function(key)  # computes the hash value based on the key
-                # index = hash % self.capacity  # determines the index assigned to that value
-                #
 
+        for index in range(self.capacity, new_capacity):
+            self.buckets.append(LinkedList())
+        self.capacity = new_capacity
+        for index in range(new_capacity):
+            sll = self.buckets.get_at_index(index)
+            for node in sll:
+                key = node.key
+                value = node.value
+                self.put(key, value)
 
     def get_keys(self) -> DynamicArray:
         """
