@@ -66,16 +66,58 @@ class MinHeap:
                 return
 
     def get_min(self) -> object:
-        """Returns the minimum key of the heap """
+        """Returns the minimum element of the heap """
         if self.heap.length() == 0:
             raise MinHeapException
         return self.heap.get_at_index(0)
 
     def remove_min(self) -> object:
-        """
-        TODO: Write this implementation
-        """
-        return None
+        """Removes minimum element in the heap"""
+        if self.heap.length() == 0:
+            raise MinHeapException
+        first = self.heap.get_at_index(0)
+        last = self.heap.pop()
+        length = self.heap.length()
+
+        if length != 0:
+            parent_index = 0  # calculates the parent index
+            self.heap.set_at_index(parent_index, last)
+
+            gt = False
+            while gt is False:
+                length = self.heap.length()
+                parent = self.heap.get_at_index(parent_index)  # saves value of the parent
+
+                child_left_index = int((2 * parent_index) + 1)
+                child_right_index = int((2 * parent_index) + 2)
+
+                child_left = self.heap.get_at_index(child_left_index)
+                child_right = self.heap.get_at_index(child_right_index)
+
+                if child_left_index >= length and child_right_index >= length:
+                    return first
+
+                if child_left_index < length:
+                    if parent > child_left:
+                        temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                        parent_index = child_left_index
+                        child_left_index = temp_parent_index
+                        self.heap.set_at_index(parent_index, parent)  # swaps the parent and insertion values
+                        self.heap.set_at_index(child_left_index, child_left)
+
+                elif child_right_index < length:
+                    if parent > child_right:
+                        temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                        parent_index = child_right_index
+                        child_right_index = temp_parent_index
+                        self.heap.set_at_index(parent_index, parent)  # swaps the parent and insertion values
+                        self.heap.set_at_index(child_right_index, child_right)
+
+                else:
+                    return first
+        else:
+            return first
+
 
     def build_heap(self, da: DynamicArray) -> None:
         """
@@ -104,19 +146,19 @@ if __name__ == '__main__':
     #     print(h)
 
 
-    print("\nPDF - get_min example 1")
-    print("-----------------------")
-    h = MinHeap(['fish', 'bird'])
-    print(h)
-    print(h.get_min(), h.get_min())
+    # print("\nPDF - get_min example 1")
+    # print("-----------------------")
+    # h = MinHeap(['fish', 'bird'])
+    # print(h)
+    # print(h.get_min(), h.get_min())
 
 
-    # print("\nPDF - remove_min example 1")
-    # print("--------------------------")
-    # h = MinHeap([1, 10, 2, 9, 3, 8, 4, 7, 5, 6])
-    # while not h.is_empty():
-    #     print(h, end=' ')
-    #     print(h.remove_min())
+    print("\nPDF - remove_min example 1")
+    print("--------------------------")
+    h = MinHeap([1, 10, 2, 9, 3, 8, 4, 7, 5, 6])
+    while not h.is_empty():
+        print(h, end=' ')
+        print(h.remove_min())
 
 
     # print("\nPDF - build_heap example 1")
