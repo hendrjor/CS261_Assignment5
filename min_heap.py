@@ -80,44 +80,49 @@ class MinHeap:
         length = self.heap.length()
 
         if length != 0:
-            parent_index = 0  # calculates the parent index
+            parent_index = 0  # sets the initial parent index
             self.heap.set_at_index(parent_index, last)
 
-            gt = False
-            while gt is False:
-                length = self.heap.length()
+            while True:
                 parent = self.heap.get_at_index(parent_index)  # saves value of the parent
 
                 child_left_index = int((2 * parent_index) + 1)
                 child_right_index = int((2 * parent_index) + 2)
 
+                if child_right_index >= length:
+                    if length == 2:
+                        child_left = self.heap.get_at_index(1)
+                        if parent > child_left:
+                            temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                            parent_index = child_left_index
+                            child_left_index = temp_parent_index
+                            self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+                            self.heap.set_at_index(child_left_index, child_left)
+                            return first
+
+                    return first
+
                 child_left = self.heap.get_at_index(child_left_index)
                 child_right = self.heap.get_at_index(child_right_index)
 
-                if child_left_index >= length and child_right_index >= length:
-                    return first
+                if child_left <= child_right:
+                    min_child = child_left
+                    min_child_index = child_left_index
+                else:
+                    min_child = child_right
+                    min_child_index = child_right_index
 
-                if child_left_index < length:
-                    if parent > child_left:
-                        temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-                        parent_index = child_left_index
-                        child_left_index = temp_parent_index
-                        self.heap.set_at_index(parent_index, parent)  # swaps the parent and insertion values
-                        self.heap.set_at_index(child_left_index, child_left)
-
-                elif child_right_index < length:
-                    if parent > child_right:
-                        temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-                        parent_index = child_right_index
-                        child_right_index = temp_parent_index
-                        self.heap.set_at_index(parent_index, parent)  # swaps the parent and insertion values
-                        self.heap.set_at_index(child_right_index, child_right)
+                if parent > min_child:
+                    temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                    parent_index = min_child_index
+                    min_child_index = temp_parent_index
+                    self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+                    self.heap.set_at_index(min_child_index, min_child)
 
                 else:
                     return first
         else:
             return first
-
 
     def build_heap(self, da: DynamicArray) -> None:
         """
@@ -145,13 +150,11 @@ if __name__ == '__main__':
     #     h.add(value)
     #     print(h)
 
-
     # print("\nPDF - get_min example 1")
     # print("-----------------------")
     # h = MinHeap(['fish', 'bird'])
     # print(h)
     # print(h.get_min(), h.get_min())
-
 
     print("\nPDF - remove_min example 1")
     print("--------------------------")
@@ -159,7 +162,6 @@ if __name__ == '__main__':
     while not h.is_empty():
         print(h, end=' ')
         print(h.remove_min())
-
 
     # print("\nPDF - build_heap example 1")
     # print("--------------------------")
@@ -171,4 +173,3 @@ if __name__ == '__main__':
     # da.set_at_index(0, 500)
     # print(da)
     # print(h)
-
