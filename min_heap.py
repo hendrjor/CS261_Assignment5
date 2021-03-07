@@ -136,38 +136,50 @@ class MinHeap:
         for i in range(length):
             x = da.get_at_index(i)
             self.heap.append(x)
+
         parent_index = int((length - 2) / 2)
 
-        while parent_index != -1:
-            parent = self.heap.get_at_index(parent_index)
+        self.build_heap_helper(parent_index, length)
 
-            child_left_index = int((2 * parent_index) + 1)
-            child_right_index = int((2 * parent_index) + 2)
+    def build_heap_helper(self, parent_index, length):
+        """"""
+        if parent_index == -1:
+            return
+        parent = self.heap.get_at_index(parent_index)
+        child_left_index = int((2 * parent_index) + 1)
+        child_right_index = int((2 * parent_index) + 2)
 
-            if child_right_index >= length:
-                child_left = self.heap.get_at_index(child_left_index)
+        if child_right_index >= length and child_left_index >= length:
+            return
+
+        elif child_right_index >= length:
+            child_left = self.heap.get_at_index(child_left_index)
+            min_child = child_left
+            min_child_index = child_left_index
+        else:
+            child_left = self.heap.get_at_index(child_left_index)
+            child_right = self.heap.get_at_index(child_right_index)
+
+            if child_left <= child_right:
                 min_child = child_left
                 min_child_index = child_left_index
             else:
-                child_left = self.heap.get_at_index(child_left_index)
-                child_right = self.heap.get_at_index(child_right_index)
+                min_child = child_right
+                min_child_index = child_right_index
 
-                if child_left <= child_right:
-                    min_child = child_left
-                    min_child_index = child_left_index
-                else:
-                    min_child = child_right
-                    min_child_index = child_right_index
+        if parent > min_child:
+            temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+            parent_index = min_child_index
+            min_child_index = temp_parent_index
+            self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+            self.heap.set_at_index(min_child_index, min_child)
 
-            if parent > min_child:
-                temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-                parent_index = min_child_index
-                min_child_index = temp_parent_index
-                self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
-                self.heap.set_at_index(min_child_index, min_child)
-                parent_index = temp_parent_index - 1
-            else:
-                parent_index -= 1
+            self.build_heap_helper(parent_index, length)
+            self.build_heap_helper(temp_parent_index - 1, length)
+
+        else:
+            parent_index -= 1
+            self.build_heap_helper(parent_index, length)
 
 
 # BASIC TESTING
@@ -211,3 +223,12 @@ if __name__ == '__main__':
     da.set_at_index(0, 500)
     print(da)
     print(h)
+
+    print("\n")
+
+    da = DynamicArray([500, 2, 11, 8, 6, 20, 1, 3, 7])
+    h = MinHeap([1, 1, 1, 1, 11, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+    print(h)
+    h.build_heap(da)
+    print(h)
+    print(da)
