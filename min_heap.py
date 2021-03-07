@@ -102,7 +102,7 @@ class MinHeap:
                 if child_right_index >= length and child_left_index >= length:
                     return first
 
-                elif child_right_index >= length :
+                elif child_right_index >= length:
                     child_left = self.heap.get_at_index(child_left_index)
                     min_child = child_left
                     min_child_index = child_left_index
@@ -130,15 +130,41 @@ class MinHeap:
             return first
 
     def build_heap(self, da: DynamicArray) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """Builds a heap from an unsorted arrayn """
+
+        length = da.length()
+        parent_index = int((length - 2) / 2)
+        parent = da.get_at_index(parent_index)
+
+        while parent_index != 0:
+            parent = da.get_at_index(parent_index)
+
+            child_left_index = int((2 * parent_index) + 1)
+            child_right_index = int((2 * parent_index) + 2)
+
+            child_left = da.get_at_index(child_left_index)
+            child_right = da.get_at_index(child_right_index)
+
+            if child_left <= child_right:
+                min_child = child_left
+                min_child_index = child_left_index
+            else:
+                min_child = child_right
+                min_child_index = child_right_index
+
+            if parent > min_child:
+                temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                parent_index = min_child_index
+                min_child_index = temp_parent_index
+                da.set_at_index(parent_index, parent)  # swaps the parent and child values
+                da.set_at_index(min_child_index, min_child)
+                parent_index = temp_parent_index - 1
+            else:
+                parent_index -= 1
 
 
 # BASIC TESTING
 if __name__ == '__main__':
-
     # print("\nPDF - add example 1")
     # print("-------------------")
     # h = MinHeap()
@@ -161,21 +187,20 @@ if __name__ == '__main__':
     # print(h)
     # print(h.get_min(), h.get_min())
 
-    print("\nPDF - remove_min example 1")
-    print("--------------------------")
-    h = MinHeap([1, 10, 2, 9, 3, 8, 4, 7, 5, 6])
-    while not h.is_empty():
-        print(h, end=' ')
-        print(h.remove_min())
-
-
-    # print("\nPDF - build_heap example 1")
+    # print("\nPDF - remove_min example 1")
     # print("--------------------------")
-    # da = DynamicArray([100, 20, 6, 200, 90, 150, 300])
-    # h = MinHeap(['zebra', 'apple'])
-    # print(h)
-    # h.build_heap(da)
-    # print(h)
-    # da.set_at_index(0, 500)
-    # print(da)
-    # print(h)
+    # h = MinHeap([1, 10, 2, 9, 3, 8, 4, 7, 5, 6])
+    # while not h.is_empty():
+    #     print(h, end=' ')
+    #     print(h.remove_min())
+
+    print("\nPDF - build_heap example 1")
+    print("--------------------------")
+    da = DynamicArray([100, 20, 6, 200, 90, 150, 300])
+    h = MinHeap(['zebra', 'apple'])
+    print(h)
+    h.build_heap(da)
+    print(h)
+    da.set_at_index(0, 500)
+    print(da)
+    print(h)
