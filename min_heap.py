@@ -144,15 +144,23 @@ class MinHeap:
             child_left_index = int((2 * parent_index) + 1)
             child_right_index = int((2 * parent_index) + 2)
 
-            child_left = self.heap.get_at_index(child_left_index)
-            child_right = self.heap.get_at_index(child_right_index)
+            # child_left = self.heap.get_at_index(child_left_index)
+            # child_right = self.heap.get_at_index(child_right_index)
 
-            if child_left <= child_right:
+            if child_right_index >= length:
+                child_left = self.heap.get_at_index(child_left_index)
                 min_child = child_left
                 min_child_index = child_left_index
             else:
-                min_child = child_right
-                min_child_index = child_right_index
+                child_left = self.heap.get_at_index(child_left_index)
+                child_right = self.heap.get_at_index(child_right_index)
+
+                if child_left <= child_right:
+                    min_child = child_left
+                    min_child_index = child_left_index
+                else:
+                    min_child = child_right
+                    min_child_index = child_right_index\
 
             if parent > min_child:
                 temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
