@@ -131,19 +131,21 @@ class MinHeap:
 
     def build_heap(self, da: DynamicArray) -> None:
         """Builds a heap from an unsorted arrayn """
-
         length = da.length()
+        self.heap = DynamicArray()
+        for i in range(length):
+            x = da.get_at_index(i)
+            self.heap.append(x)
         parent_index = int((length - 2) / 2)
-        parent = da.get_at_index(parent_index)
 
-        while parent_index != 0:
-            parent = da.get_at_index(parent_index)
+        while parent_index != -1:
+            parent = self.heap.get_at_index(parent_index)
 
             child_left_index = int((2 * parent_index) + 1)
             child_right_index = int((2 * parent_index) + 2)
 
-            child_left = da.get_at_index(child_left_index)
-            child_right = da.get_at_index(child_right_index)
+            child_left = self.heap.get_at_index(child_left_index)
+            child_right = self.heap.get_at_index(child_right_index)
 
             if child_left <= child_right:
                 min_child = child_left
@@ -156,8 +158,8 @@ class MinHeap:
                 temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
                 parent_index = min_child_index
                 min_child_index = temp_parent_index
-                da.set_at_index(parent_index, parent)  # swaps the parent and child values
-                da.set_at_index(min_child_index, min_child)
+                self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+                self.heap.set_at_index(min_child_index, min_child)
                 parent_index = temp_parent_index - 1
             else:
                 parent_index -= 1
