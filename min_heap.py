@@ -118,12 +118,11 @@ class MinHeap:
                         min_child_index = child_right_index
 
                 if parent > min_child:
-                    self.heap.swap(min_child_index, parent_index)
-                    # temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-                    # parent_index = min_child_index
-                    # min_child_index = temp_parent_index
-                    # self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
-                    # self.heap.set_at_index(min_child_index, min_child)
+                    temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                    parent_index = min_child_index
+                    min_child_index = temp_parent_index
+                    self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+                    self.heap.set_at_index(min_child_index, min_child)
 
                 else:
                     return first
@@ -161,13 +160,12 @@ class MinHeap:
                     min_child_index = child_right_index\
 
             if parent > min_child:
-                self.heap.swap(min_child_index, parent_index)
-                # temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-                # parent_index = min_child_index
-                # min_child_index = temp_parent_index
-                # self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
-                # self.heap.set_at_index(min_child_index, min_child)
-                # parent_index  - 1
+                temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                parent_index = min_child_index
+                min_child_index = temp_parent_index
+                self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+                self.heap.set_at_index(min_child_index, min_child)
+                parent_index  - 1
             parent_index -= 1
 
 
