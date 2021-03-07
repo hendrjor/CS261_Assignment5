@@ -89,28 +89,33 @@ class MinHeap:
                 child_left_index = int((2 * parent_index) + 1)
                 child_right_index = int((2 * parent_index) + 2)
 
-                if child_right_index >= length:
-                    if length == 2:
-                        child_left = self.heap.get_at_index(1)
-                        if parent > child_left:
-                            temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-                            parent_index = child_left_index
-                            child_left_index = temp_parent_index
-                            self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
-                            self.heap.set_at_index(child_left_index, child_left)
-                            return first
+                if length == 2:
+                    child_left = self.heap.get_at_index(1)
+                    if parent > child_left:
+                        temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+                        parent_index = child_left_index
+                        child_left_index = temp_parent_index
+                        self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+                        self.heap.set_at_index(child_left_index, child_left)
+                        return first
 
+                if child_right_index >= length and child_left_index >= length:
                     return first
 
-                child_left = self.heap.get_at_index(child_left_index)
-                child_right = self.heap.get_at_index(child_right_index)
-
-                if child_left <= child_right:
+                elif child_right_index >= length :
+                    child_left = self.heap.get_at_index(child_left_index)
                     min_child = child_left
                     min_child_index = child_left_index
                 else:
-                    min_child = child_right
-                    min_child_index = child_right_index
+                    child_left = self.heap.get_at_index(child_left_index)
+                    child_right = self.heap.get_at_index(child_right_index)
+
+                    if child_left <= child_right:
+                        min_child = child_left
+                        min_child_index = child_left_index
+                    else:
+                        min_child = child_right
+                        min_child_index = child_right_index
 
                 if parent > min_child:
                     temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
@@ -162,6 +167,7 @@ if __name__ == '__main__':
     while not h.is_empty():
         print(h, end=' ')
         print(h.remove_min())
+
 
     # print("\nPDF - build_heap example 1")
     # print("--------------------------")
