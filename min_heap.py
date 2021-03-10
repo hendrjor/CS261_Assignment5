@@ -137,8 +137,8 @@ class MinHeap:
             x = da.get_at_index(i)
             self.heap.append(x)
 
-        # parent_index = int((length - 2) / 2)
-        for index in range(int(length/2), -1, -1):
+        start_index = int((length - 2) / 2)
+        for index in range(start_index, -1, -1):
             self.build_heap_helper(index, length)
 
         # switch = False
@@ -188,29 +188,90 @@ class MinHeap:
     #         parent_index -= 1
     #         self.build_heap_helper(parent_index, length, False)
 
-    def build_heap_helper(self, index, length):
-        """Recursively builds a heap from an unorganized list"""
-        leaf = False
-        if index >= int(length/2) and index <= length:
-            leaf = True
+    # def build_heap_helper(self, index, length):
+    #     """Recursively builds a heap from an unorganized list"""
+    #     leaf = False
+    #     if index >= int(length/2) and index <= length:
+    #         leaf = True
+    #
+    #     parent = self.heap.get_at_index(index)
+    #     child_left_index = int((2 * index))
+    #     child_right_index = int((2 * index) + 1)
 
-        parent = self.heap.get_at_index(index)
-        child_left_index = int((2 * index))
-        child_right_index = int((2 * index) + 1)
+        # if child_right_index >= length and child_left_index >= length:
+        #     return
+        #
+        # elif child_right_index >= length:
+        #     child_left = self.heap.get_at_index(child_left_index)
+        #     min_child = child_left
+        #     min_child_index = child_left_index
+        # else:
+        #     child_left = self.heap.get_at_index(child_left_index)
+        #     child_right = self.heap.get_at_index(child_right_index)
+        #
+        #     if child_left <= child_right:
+        #         min_child = child_left
+        #         min_child_index = child_left_index
+        #     else:
+        #         min_child = child_right
+        #         min_child_index = child_right_index
 
-        if not leaf:
-            left_child = self.heap.get_at_index(child_left_index)
-            right_child = self.heap.get_at_index(child_right_index)
-            if parent > left_child or parent > right_child:
 
-                if left_child < right_child:
-                    self.heap.swap(index, child_left_index)
-                    self.build_heap_helper(child_left_index, length)
+        # if not leaf:
+        #     if parent > min_child:
+        #         self.heap.swap(index, min_child_index)
+        #         self.build_heap_helper(min_child_index, length)
 
-                else:
-                    self.heap.swap(index, child_right_index)
-                    self.build_heap_helper(child_right_index, length)
+        # if not leaf:
+        #     left_child = self.heap.get_at_index(child_left_index)
+        #     right_child = self.heap.get_at_index(child_right_index)
+        #     if parent > left_child or parent > right_child:
+        #
+        #         if left_child < right_child:
+        #             self.heap.swap(index, child_left_index)
+        #             self.build_heap_helper(child_left_index, length)
+        #
+        #         else:
+        #             self.heap.swap(index, child_right_index)
+        #             self.build_heap_helper(child_right_index, length)
 
+    def build_heap_helper(self, length, index):
+        """"""
+        largest = index
+        # parent = self.heap.get_at_index(index)
+        child_left_index = int((2 * index) + 1)
+        child_right_index = int((2 * index) + 2)
+
+        # left_child = self.heap.get_at_index(child_left_index)
+        # right_child = self.heap.get_at_index(child_right_index)
+
+        if child_left_index < length and self.heap.get_at_index(child_left_index) > self.heap.get_at_index(largest):
+            largest = child_left_index
+
+        if child_right_index < length and self.heap.get_at_index(child_right_index) > self.heap.get_at_index(largest):
+            largest = child_right_index
+
+        if largest != index:
+            self.heap.swap(index, largest)
+            self.build_heap_helper(length, index)
+
+        # if child_right_index >= length and child_left_index >= length:
+        #     return
+        #
+        # elif child_right_index >= length:
+        #     child_left = self.heap.get_at_index(child_left_index)
+        #     min_child = child_left
+        #     min_child_index = child_left_index
+        # else:
+        #     child_left = self.heap.get_at_index(child_left_index)
+        #     child_right = self.heap.get_at_index(child_right_index)
+        #
+        #     if child_left <= child_right:
+        #         min_child = child_left
+        #         min_child_index = child_left_index
+        #     else:
+        #         min_child = child_right
+        #         min_child_index = child_right_index
 
 
 # BASIC TESTING
