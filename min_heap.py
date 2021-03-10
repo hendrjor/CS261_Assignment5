@@ -137,54 +137,80 @@ class MinHeap:
             x = da.get_at_index(i)
             self.heap.append(x)
 
-        parent_index = int((length - 2) / 2)
-        switch = False
+        # parent_index = int((length - 2) / 2)
+        for index in range(int(length/2), 0, -1):
+            self.build_heap_helper(index, length)
 
-        self.build_heap_helper(parent_index, length, switch)
+        # switch = False
 
-    def build_heap_helper(self, parent_index, length, switch):
-        """"""
-        if parent_index == -1:
-            return
-        parent = self.heap.get_at_index(parent_index)
-        child_left_index = int((2 * parent_index) + 1)
-        child_right_index = int((2 * parent_index) + 2)
+        # self.build_heap_helper(parent_index, length, switch)
 
-        if child_right_index >= length and child_left_index >= length:
-            return
+    # def build_heap_helper(self, parent_index, length, switch):
+    #     """"""
+    #     if parent_index == -1:
+    #         return
+    #     parent = self.heap.get_at_index(parent_index)
+    #     child_left_index = int((2 * parent_index) + 1)
+    #     child_right_index = int((2 * parent_index) + 2)
+    #
+    #     if child_right_index >= length and child_left_index >= length:
+    #         return
+    #
+    #     elif child_right_index >= length:
+    #         child_left = self.heap.get_at_index(child_left_index)
+    #         min_child = child_left
+    #         min_child_index = child_left_index
+    #     else:
+    #         child_left = self.heap.get_at_index(child_left_index)
+    #         child_right = self.heap.get_at_index(child_right_index)
+    #
+    #         if child_left <= child_right:
+    #             min_child = child_left
+    #             min_child_index = child_left_index
+    #         else:
+    #             min_child = child_right
+    #             min_child_index = child_right_index
+    #
+    #     if parent > min_child:
+    #         temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
+    #         parent_index = min_child_index
+    #         min_child_index = temp_parent_index
+    #         self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
+    #         self.heap.set_at_index(min_child_index, min_child)
+    #
+    #         if switch is True:
+    #             self.build_heap_helper(parent_index, length, True)
+    #             return
+    #         self.build_heap_helper(temp_parent_index - 1, length, False)
+    #         return
+    #
+    #     else:
+    #         parent_index -= 1
+    #         self.build_heap_helper(parent_index, length, False)
 
-        elif child_right_index >= length:
-            child_left = self.heap.get_at_index(child_left_index)
-            min_child = child_left
-            min_child_index = child_left_index
-        else:
-            child_left = self.heap.get_at_index(child_left_index)
-            child_right = self.heap.get_at_index(child_right_index)
+    def build_heap_helper(self, index, length):
+        """Recursively builds a heap from an unorganized list"""
+        leaf = False
+        if index >= int(length/2) and index <= length:
+            leaf = True
 
-            if child_left <= child_right:
-                min_child = child_left
-                min_child_index = child_left_index
-            else:
-                min_child = child_right
-                min_child_index = child_right_index
+        parent = self.heap.get_at_index(index)
+        child_left_index = int((2 * index))
+        child_right_index = int((2 * index) + 1)
 
-        if parent > min_child:
-            temp_parent_index = parent_index  # temp variable to hold the parent's index during the swap
-            parent_index = min_child_index
-            min_child_index = temp_parent_index
-            self.heap.set_at_index(parent_index, parent)  # swaps the parent and child values
-            self.heap.set_at_index(min_child_index, min_child)
+        if not leaf:
+            left_child = self.heap.get_at_index(child_left_index)
+            right_child = self.heap.get_at_index(child_right_index)
+            if parent > left_child or parent > right_child:
 
-            if switch is True:
-                self.build_heap_helper(parent_index, length, True)
-                return
-            self.build_heap_helper(temp_parent_index - 1, length, False)
+                if left_child < right_child:
+                    self.heap.swap(index, child_left_index)
+                    self.build_heap_helper(child_left_index, length)
 
-        else:
-            # if switch is True:
-            #     return
-            parent_index -= 1
-            self.build_heap_helper(parent_index, length, False)
+                else:
+                    self.heap.swap(index, child_right_index)
+                    self.build_heap_helper(child_right_index, length)
+
 
 
 # BASIC TESTING
