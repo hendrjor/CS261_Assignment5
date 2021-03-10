@@ -138,7 +138,7 @@ class MinHeap:
             self.heap.append(x)
 
         # parent_index = int((length - 2) / 2)
-        for index in range(int(length/2), 0, -1):
+        for index in range(int(length/2), -1, -1):
             self.build_heap_helper(index, length)
 
         # switch = False
